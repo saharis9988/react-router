@@ -28,6 +28,10 @@ import {
   useResolvedPath,
   useRoutes,
   useOutletContext,
+  useLoaderData,
+  useActionData,
+  useException,
+  useTransition,
 } from "react-router";
 import type { To } from "react-router";
 
@@ -80,6 +84,10 @@ export {
   useResolvedPath,
   useRoutes,
   useOutletContext,
+  useLoaderData,
+  useActionData,
+  useException,
+  useTransition,
 };
 
 export { NavigationType } from "react-router";

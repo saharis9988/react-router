@@ -409,5 +409,34 @@ export function useLoaderData() {
   invariant(route, "expected Route context");
 
   let thisRoute = route.matches[route.matches.length - 1];
-  return state.loaderData[thisRoute.pathname];
+  return state.loaderData[thisRoute.route.id];
+}
+
+export function useActionData() {
+  let state = React.useContext(DataRouterStateContext);
+  invariant(state, "useActionData must be rendered within a DataRouter");
+
+  let route = React.useContext(RouteContext);
+  invariant(route, "expected Route context");
+
+  let thisRoute = route.matches[route.matches.length - 1];
+  return state.actionData?.[thisRoute.route.id];
+}
+
+export function useException() {
+  let state = React.useContext(DataRouterStateContext);
+  invariant(state, "useException must be rendered within a DataRouter");
+
+  let route = React.useContext(RouteContext);
+  invariant(route, "expected Route context");
+
+  let thisRoute = route.matches[route.matches.length - 1];
+  return state.exceptions?.[thisRoute.route.id];
+}
+
+export function useTransition() {
+  let state = React.useContext(DataRouterStateContext);
+  invariant(state, "useTransition must be rendered within a DataRouter");
+
+  return state.transition;
 }

@@ -13,6 +13,8 @@ import type {
   To,
   Location,
   Router as DataRouter,
+  LoaderFunctionArgs,
+  ActionFunctionArgs,
 } from "@remix-run/router";
 import {
   createMemoryRouter,
@@ -190,7 +192,13 @@ export function Outlet(props: OutletProps): React.ReactElement | null {
   return useOutlet(props.context);
 }
 
-export interface RouteProps {
+interface DataRouteProps {
+  loader?: (args: LoaderFunctionArgs) => Promise<any>;
+  action?: (args: ActionFunctionArgs) => Promise<any>;
+  exceptionElement?: React.ReactNode;
+}
+
+export interface RouteProps extends DataRouteProps {
   caseSensitive?: boolean;
   children?: React.ReactNode;
   element?: React.ReactNode | null;
@@ -198,7 +206,7 @@ export interface RouteProps {
   path?: string;
 }
 
-export interface PathRouteProps {
+export interface PathRouteProps extends DataRouteProps {
   caseSensitive?: boolean;
   children?: React.ReactNode;
   element?: React.ReactNode | null;
@@ -206,12 +214,12 @@ export interface PathRouteProps {
   path: string;
 }
 
-export interface LayoutRouteProps {
+export interface LayoutRouteProps extends DataRouteProps {
   children?: React.ReactNode;
   element?: React.ReactNode | null;
 }
 
-export interface IndexRouteProps {
+export interface IndexRouteProps extends DataRouteProps {
   element?: React.ReactNode | null;
   index: true;
 }
@@ -383,6 +391,9 @@ export function createRoutesFromChildren(
       element: element.props.element,
       index: element.props.index,
       path: element.props.path,
+      loader: element.props.loader,
+      action: element.props.action,
+      exceptionElement: element.props.exceptionElement,
     };
 
     if (element.props.children) {
